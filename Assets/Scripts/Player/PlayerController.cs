@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private Rigidbody _rb;
+
     private void Start()
     {
         if(_inputs == null)
@@ -27,7 +29,31 @@ public class PlayerController : MonoBehaviour
             _inputs.Enable();
         }
 
+        _rb = GetComponent<Rigidbody>();
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
 
             
+    }
+
+    private void GameManager_OnGameStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.MainMenu:
+                break;
+            case GameState.BeforeStartGame:
+                _rb.isKinematic = true;
+                break;
+            case GameState.StartGame:
+                _rb.isKinematic = false;
+                break;
+            case GameState.InGame:
+                _rb.isKinematic = false;
+                break;
+            case GameState.GameOver:
+                break;
+            case GameState.Pause:
+                break;
+        }
     }
 }
