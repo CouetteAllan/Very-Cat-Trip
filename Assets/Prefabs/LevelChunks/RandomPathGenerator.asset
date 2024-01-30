@@ -34,10 +34,10 @@ MonoBehaviour:
   startOrientation: {x: 0, y: 90, z: 0}
   randomizer: {fileID: 11400000, guid: d856acc0e92435345a3ae0cb58b7ef9d, type: 2}
   restrictPitch: 1
-  restrictYaw: 0
+  restrictYaw: 1
   restrictRoll: 1
   usePitch: 1
-  useYaw: 0
+  useYaw: 1
   useRoll: 0
   useColors: 0
   useSizes: 0

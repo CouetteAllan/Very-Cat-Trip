@@ -13,12 +13,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [SerializeField] private Transform _groundOffsetPoint;
-    [SerializeField] private Vector2 _groundBoxCastSize;
+    [SerializeField] private Vector3 _groundBoxCastSize;
     [SerializeField] private float _castDistance;
+    [SerializeField] private float _radius;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private Transform _centerOfMassOffset;
 
-    private Rigidbody2D _rb;
     private Rigidbody _rb3D;
     private MInputsAction _inputAction;
     private PlayerController _playerController;
@@ -26,15 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimer = 1.0f;
     private float _currentJumpTimer = 0.0f;
 
+    private bool _isGrounded= false;
+
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
         _rb3D = GetComponent<Rigidbody>();
-        if( _rb != null )
-            _rb.centerOfMass = _centerOfMassOffset.localPosition;
-        else
-            _rb3D.centerOfMass = _centerOfMassOffset.localPosition;
+        _rb3D.centerOfMass = _centerOfMassOffset.localPosition;
 
 
         _playerController = GetComponent<PlayerController>();
@@ -50,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump_performed(InputAction.CallbackContext obj)
     {
-        if (IsGrounded())
+        if (_isGrounded)
         {
             _currentJumpTimer = _jumpTimer;
             //play anim
@@ -60,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _currentJumpTimer -= Time.deltaTime;
-        if (IsGrounded() && _currentJumpTimer > 0.0f)
+        if (_isGrounded && _currentJumpTimer > 0.0f)
         {
             PerformJump();
         }
@@ -68,48 +66,56 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_rb != null)
-        {
-            _rb.AddForce(transform.right * _horizontalSpeed);
-            var clampedVelocityX = Mathf.Clamp(_rb.velocity.x, -25.0f, _maxHorizontalSpeed);
-            var newClampedVelocity = new Vector2(clampedVelocityX, _rb.velocity.y);
-            _rb.velocity = newClampedVelocity;
-        }
-        else
-        {
-            _rb3D.AddForce(Vector2.right * _horizontalSpeed,ForceMode.Impulse);
-            var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _maxHorizontalSpeed);
-            var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
-            _rb3D.velocity = newClampedVelocity;
-        }
-
+        _rb3D.AddForce(Vector2.right * _horizontalSpeed, ForceMode.Impulse);
+        var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _maxHorizontalSpeed);
+        var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
+        _rb3D.velocity = newClampedVelocity;
 
     }
 
     private void PerformJump()
     {
-        if(_rb != null)
-            _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-        else
-            _rb3D.AddForce(Vector2.up * _jumpForce, ForceMode.Force);
+        _rb3D.AddForce(Vector2.up * _jumpForce, ForceMode.Impulse);
 
         _currentJumpTimer = 0.0f;
+        _isGrounded = false;
+
         Debug.Log("we perform");
     }
 
 
     private bool IsGrounded()
     {
-        return Physics2D.BoxCast(_groundOffsetPoint.position, _groundBoxCastSize, 0, -transform.up, _castDistance, _groundMask);
+        var cast = Physics.SphereCast(_rb3D.position, _radius, Vector3.down,out RaycastHit hitInfo,_castDistance);
+        Debug.Log(hitInfo.collider);
+
+        return cast;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(_groundOffsetPoint.position -transform.up * _castDistance, _groundBoxCastSize);
+        Gizmos.DrawWireSphere(transform.position -transform.up * _castDistance, _radius );
     }
 
     private void OnDisable()
     {
         _inputAction.Player.Jump.performed -= Jump_performed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            Debug.Log("we perform de ouf");
+            _isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 6 && collision.contactCount <= 1)
+        {
+            //_isGrounded = false;
+        }
     }
 }
