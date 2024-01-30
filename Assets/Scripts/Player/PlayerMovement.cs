@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rb3D;
     private MInputsAction _inputAction;
     private PlayerController _playerController;
+    private Animator _anim;
 
     private float _jumpTimer = 1.0f;
     private float _currentJumpTimer = 0.0f;
@@ -33,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb3D = GetComponent<Rigidbody>();
         _rb3D.centerOfMass = _centerOfMassOffset.localPosition;
-
+        _anim = GetComponent<Animator>();
 
         _playerController = GetComponent<PlayerController>();
     }
@@ -62,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
         {
             PerformJump();
         }
+
+        _anim.SetBool("IsGrounded", _isGrounded);
     }
 
     private void FixedUpdate()
@@ -77,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb3D.AddForce(Vector2.up * _jumpForce, ForceMode.Impulse);
 
+        _anim.SetTrigger("Jump");
         _currentJumpTimer = 0.0f;
         _isGrounded = false;
 

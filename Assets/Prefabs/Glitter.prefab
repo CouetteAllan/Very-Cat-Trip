@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eee2a64f6c74fc4f8fca42e725a6ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 5005271544939270996}
+  spriteRenderer: {fileID: 4874823605253121880}
 --- !u!135 &5005271544939270996
 SphereCollider:
   m_ObjectHideFlags: 0

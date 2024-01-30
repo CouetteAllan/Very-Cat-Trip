@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 1206739899}
   - component: {fileID: 1206739903}
   - component: {fileID: 1206739904}
+  - component: {fileID: 3558159187375246987}
   m_Layer: 0
   m_Name: CatTrip
   m_TagString: Untagged
@@ -201,10 +202,31 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.62
-  m_Height: 3.15
+  m_Radius: 0.52674866
+  m_Height: 3.2626827
   m_Direction: 0
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Center: {x: -0.03634131, y: 0.0030899048, z: 0}
+--- !u!95 &3558159187375246987
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128690315647226270}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 941d18fa7c384f648ad01299f77474ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4147874659127944371
 GameObject:
   m_ObjectHideFlags: 0
