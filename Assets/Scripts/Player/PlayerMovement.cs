@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb3D.AddForce(Vector2.right * _horizontalSpeed, ForceMode.Impulse);
+        _rb3D.AddForce(Vector2.right * _horizontalSpeed, ForceMode.Acceleration);
         var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _maxHorizontalSpeed);
         var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
         _rb3D.velocity = newClampedVelocity;
