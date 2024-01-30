@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Rayqdr.CatInputs;
+using System;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
+    public static event Action<int,bool> OnChangeHealth;
+
+    [SerializeField] private int _maxHealth = 3;
+    [SerializeField] private ParticleSystem _glitterLoss;
+
+    public int MaxHealth { get { return _maxHealth; } }
+
     private MInputsAction _inputs;
     public MInputsAction Inputs {
         get 
@@ -20,8 +28,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private Rigidbody _rb;
-    private bool _isTransformed;
     private Animator _animator;
+
+    private bool _isTransformed;
+    private int _health = 3;
+    private bool _isInvincible = false;
+    
 
     private void Start()
     {
@@ -36,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
         GlitterManager.OnGlitterTresholdUpdate += GlitterManager_OnGlitterTresholdUpdate;
+        GameManager.Instance.SetPlayer(this);
     }
 
     private void GlitterManager_OnGlitterTresholdUpdate(bool tresholdAchieved)
@@ -45,6 +58,7 @@ public class PlayerController : MonoBehaviour
             _isTransformed = true;
             //Change anims;
             _animator.SetTrigger("Transform");
+            SoundManager.Instance.Play("LevelUp");
         }
     }
 
@@ -56,6 +70,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.BeforeStartGame:
                 _rb.isKinematic = true;
+                GameManager.Instance.SetPlayer(this);
                 break;
             case GameState.StartGame:
                 _rb.isKinematic = false;
@@ -74,5 +89,38 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
         GlitterManager.OnGlitterTresholdUpdate -= GlitterManager_OnGlitterTresholdUpdate;
+    }
+
+    public void TryTakeDamage(int damage, IDamageSource source)
+    {
+        if (_isInvincible)
+            return;
+        //Blowback in the air
+        _rb.AddForce(((this.transform.position - source.Transform.position).normalized + Vector3.up) * 80.0f,ForceMode.Impulse);
+        //Lose some glitter and health
+        _health--;
+        OnChangeHealth?.Invoke(_health,true);
+        SoundManager.Instance.Play("Hurt");
+        SoundManager.Instance.Play("Paf");
+        _glitterLoss.Play();
+
+        if(_health <= 0)
+        {
+            //dead
+            GameManager.Instance.ChangeGameState(GameState.GameOver);
+        }
+
+        //Play invincible state
+        StartCoroutine(InvincibleCoroutine());
+    }
+
+    private IEnumerator InvincibleCoroutine()
+    {
+        _isInvincible = true;
+        //play fade anim
+        _animator.SetLayerWeight(1, 1);
+        yield return new WaitForSeconds(2.0f);
+        _isInvincible = false;
+        _animator.SetLayerWeight(1, 0);
     }
 }

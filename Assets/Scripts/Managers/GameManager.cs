@@ -25,7 +25,8 @@ public class GameManager : Singleton<GameManager>
     
 
     public GameState CurrentState { get; private set; } = GameState.GameOver;
-    public PlayerController PlayerController { get; private set; }
+    public PlayerController PlayerController => _player;
+    private PlayerController _player;
 
 
     private void Start()
@@ -77,4 +78,6 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitUntil(() => LevelGenerator.instance.ready == true);
         ChangeGameState(GameState.StartGame);
     }
+
+    public void SetPlayer(PlayerController player) => _player = player;
 }

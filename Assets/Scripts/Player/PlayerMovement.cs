@@ -84,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         _currentJumpTimer = 0.0f;
         _isGrounded = false;
 
-        Debug.Log("we perform");
     }
 
 
@@ -110,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            Debug.Log("we perform de ouf");
             _isGrounded = true;
         }
     }

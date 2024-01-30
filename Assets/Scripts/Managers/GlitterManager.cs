@@ -37,6 +37,7 @@ public class GlitterManager : Singleton<GlitterManager>
     {
         Glitter++;
         UIManager.Instance.UpdateGlitter(Glitter, MaxGlitter);
+        SoundManager.Instance.Play("Glitter");
     }
 
 
