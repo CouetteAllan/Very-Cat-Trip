@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab16db9ad26e5d4589d394443875f2f, type: 3}
   m_Name: RandomPathGenerator
   m_EditorClassIdentifier: 
-  pathType: 3
+  pathType: 2
   sampleRate: 30
   controlPointsPerSegment: 7
   normalInterpolation:
@@ -41,12 +41,12 @@ MonoBehaviour:
   useRoll: 0
   useColors: 0
   useSizes: 0
-  minOrientation: {x: -20, y: 0, z: 0}
-  maxOrientation: {x: 20, y: 0, z: 0}
+  minOrientation: {x: -45, y: 0, z: 0}
+  maxOrientation: {x: 25, y: 0, z: 0}
   minRandomStep: {x: 10, y: 0, z: 0}
   maxRandomStep: {x: 12, y: 0, z: 0}
-  minTurnRate: {x: 2, y: 0, z: 0}
-  maxTurnRate: {x: 4, y: 0, z: 0}
+  minTurnRate: {x: 3, y: 0, z: 0}
+  maxTurnRate: {x: 5, y: 0, z: 0}
   startTargetOrientation: {x: 0, y: 0, z: 0}
   useStartPitchTarget: 0
   useStartYawTarget: 0

@@ -22,28 +22,19 @@ public class GameManager : Singleton<GameManager>
 
     public static event Action<GameState> OnGameStateChanged;
 
-    [SerializeField] private int _maxGlitter = 50;
-    public int MaxGlitter {
-        get => _maxGlitter;
-        private set => _maxGlitter = value;
-    }
+    
 
     public GameState CurrentState { get; private set; } = GameState.GameOver;
     public PlayerController PlayerController { get; private set; }
 
-    public int Glitter { get; private set; } = 0;
 
     private void Start()
     {
-        PropScript.OnGatherProp += PropScript_OnGatherProp;
         ChangeGameState(GameState.BeforeStartGame);
         StartCoroutine(StartGame());
     }
 
-    private void PropScript_OnGatherProp(PropScript prop)
-    {
-        GatherGlitter();
-    }
+    
 
     public void ChangeGameState(GameState newState)
     {
@@ -80,11 +71,6 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("Game State: " + CurrentState.ToString());
     }
 
-    private void GatherGlitter()
-    {
-        Glitter++;
-        UIManager.Instance.UpdateGlitter(Glitter,MaxGlitter);
-    }
 
     private IEnumerator StartGame()
     {

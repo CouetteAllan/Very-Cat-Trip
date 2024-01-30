@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     }
 
     private Rigidbody _rb;
+    private bool _isTransformed;
+    private Animator _animator;
 
     private void Start()
     {
@@ -30,9 +32,20 @@ public class PlayerController : MonoBehaviour
         }
 
         _rb = GetComponent<Rigidbody>();
-        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
+        _animator = GetComponent<Animator>();
 
-            
+        GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
+        GlitterManager.OnGlitterTresholdUpdate += GlitterManager_OnGlitterTresholdUpdate;
+    }
+
+    private void GlitterManager_OnGlitterTresholdUpdate(bool tresholdAchieved)
+    {
+        if(!_isTransformed && tresholdAchieved)
+        {
+            _isTransformed = true;
+            //Change anims;
+            _animator.SetTrigger("Transform");
+        }
     }
 
     private void GameManager_OnGameStateChanged(GameState newState)
@@ -55,5 +68,11 @@ public class PlayerController : MonoBehaviour
             case GameState.Pause:
                 break;
         }
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
+        GlitterManager.OnGlitterTresholdUpdate -= GlitterManager_OnGlitterTresholdUpdate;
     }
 }

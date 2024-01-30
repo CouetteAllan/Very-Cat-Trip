@@ -650,6 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 709128287}
   - component: {fileID: 709128288}
+  - component: {fileID: 709128289}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -685,7 +686,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPersistant: 0
-  _maxGlitter: 200
+--- !u!114 &709128289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709128286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d069e86d5114d7a4c8d36abe7ff4db7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isPersistant: 0
+  _maxGlitter: 22
 --- !u!1 &753673939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,26 +1683,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1154037887}
     m_Modifications:
-    - target: {fileID: 1206739903, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: m_Interpolate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1206739904, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: cc9918cb29c1e274dbb5fcb2736fce83, type: 2}
-    - target: {fileID: 3577998105426879642, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: _jumpForce
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577998105426879642, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: _horizontalSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577998105426879642, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: _maxHorizontalSpeed
-      value: 29.8
-      objectReference: {fileID: 0}
     - target: {fileID: 4128690315647226257, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1736,10 +1730,6 @@ PrefabInstance:
     - target: {fileID: 4128690315647226270, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
       propertyPath: m_Name
       value: CatTrip
-      objectReference: {fileID: 0}
-    - target: {fileID: 5033846055957272751, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 024030666173fb641a4c188ea012b3d1, type: 3}
