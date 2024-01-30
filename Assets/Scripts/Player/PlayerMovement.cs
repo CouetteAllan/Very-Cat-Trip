@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _centerOfMassOffset;
 
     private Rigidbody2D _rb;
+    private Rigidbody _rb3D;
     private MInputsAction _inputAction;
     private PlayerController _playerController;
 
@@ -29,7 +30,12 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _rb.centerOfMass = _centerOfMassOffset.localPosition;
+        _rb3D = GetComponent<Rigidbody>();
+        if( _rb != null )
+            _rb.centerOfMass = _centerOfMassOffset.localPosition;
+        else
+            _rb3D.centerOfMass = _centerOfMassOffset.localPosition;
+
 
         _playerController = GetComponent<PlayerController>();
     }
@@ -62,18 +68,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.AddForce(transform.right * _horizontalSpeed);
-        var clampedVelocityX = Mathf.Clamp(_rb.velocity.x, -25.0f, _maxHorizontalSpeed);
-        var newClampedVelocity = new Vector2(clampedVelocityX,_rb.velocity.y);
-        _rb.velocity = newClampedVelocity;
+        if(_rb != null)
+        {
+            _rb.AddForce(transform.right * _horizontalSpeed);
+            var clampedVelocityX = Mathf.Clamp(_rb.velocity.x, -25.0f, _maxHorizontalSpeed);
+            var newClampedVelocity = new Vector2(clampedVelocityX, _rb.velocity.y);
+            _rb.velocity = newClampedVelocity;
+        }
+        else
+        {
+            _rb3D.AddForce(Vector2.right * _horizontalSpeed,ForceMode.Impulse);
+            var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _maxHorizontalSpeed);
+            var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
+            _rb3D.velocity = newClampedVelocity;
+        }
 
-        
+
     }
 
     private void PerformJump()
     {
-        _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        if(_rb != null)
+            _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        else
+            _rb3D.AddForce(Vector2.up * _jumpForce, ForceMode.Force);
+
         _currentJumpTimer = 0.0f;
+        Debug.Log("we perform");
     }
 
 
