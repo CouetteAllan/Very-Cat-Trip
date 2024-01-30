@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 830944797727423151}
   - component: {fileID: 8312903178118032762}
   - component: {fileID: 9008081918722797537}
-  - component: {fileID: 3345026968071842375}
+  - component: {fileID: 4042213243773910129}
   m_Layer: 0
   m_Name: CatTrip
   m_TagString: Untagged
@@ -134,10 +134,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.5
-  m_LinearDrag: 0.6
+  m_Mass: 1
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246742661c549d14ca6d3c703f000130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3345026968071842375
+--- !u!114 &4042213243773910129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,16 +180,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 4128690315647226270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22c0195261f8444791f53b81e223b50, type: 3}
+  m_Script: {fileID: 11500000, guid: ea2fa2f688cc3ee4ca853244d65c4f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundOffsetPoint: {fileID: 8264614259007082987}
-  _groundBoxCastSize: {x: 2.35, y: 0.12}
-  _castDistance: 0.13
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _centerOfMassOffset: {fileID: 5033846055957272751}
+  updateMode: 0
+  startPercent: 0.01899999938905239
+  startDistance: 0
+  startMode: 0
+  followSpeed: 15
+  follow: 1
+  isPlayer: 1
+  loop: 0
+  physicsMode: 2
+  _motion:
+    enabled: 1
+    offset: {x: 0, y: 1.5}
+    useSplineSizes: 1
+    rotationOffset: {x: 0, y: 0, z: 0}
+    baseScale: {x: 1, y: 1, z: 1}
+    sample:
+      position: {x: 0, y: 0, z: 0}
+      up: {x: 0, y: 0, z: 0}
+      forward: {x: 0, y: 0, z: 0}
+      color: {r: 0, g: 0, b: 0, a: 0}
+      size: 0
+      percent: 0
+    applyPositionX: 1
+    applyPositionY: 1
+    applyPositionZ: 1
+    applyRotationX: 1
+    applyRotationY: 1
+    applyRotationZ: 1
+    applyScaleX: 0
+    applyScaleY: 0
+    applyScaleZ: 0
 --- !u!1 &4147874659127944371
 GameObject:
   m_ObjectHideFlags: 0

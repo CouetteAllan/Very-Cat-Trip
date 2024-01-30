@@ -7,6 +7,7 @@ using Rayqdr.CatInputs;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _horizontalSpeed = 40.0f;
+    [SerializeField] private float _maxHorizontalSpeed = 20.0f;
     [SerializeField] private float _jumpForce = 20.0f;
 
 
@@ -20,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private MInputsAction _inputAction;
     private PlayerController _playerController;
+
+    private float _jumpTimer = 1.0f;
+    private float _currentJumpTimer = 0.0f;
 
 
     private void Awake()
@@ -42,17 +46,34 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            _rb.AddForce(Vector2.up * _jumpForce,ForceMode2D.Impulse);
+            _currentJumpTimer = _jumpTimer;
             //play anim
+        }
+    }
+
+    private void Update()
+    {
+        _currentJumpTimer -= Time.deltaTime;
+        if (IsGrounded() && _currentJumpTimer > 0.0f)
+        {
+            PerformJump();
         }
     }
 
     private void FixedUpdate()
     {
         _rb.AddForce(transform.right * _horizontalSpeed);
-        var clampedVelocityX = Mathf.Clamp(_rb.velocity.x, -25.0f, 30.0f);
+        var clampedVelocityX = Mathf.Clamp(_rb.velocity.x, -25.0f, _maxHorizontalSpeed);
         var newClampedVelocity = new Vector2(clampedVelocityX,_rb.velocity.y);
         _rb.velocity = newClampedVelocity;
+
+        
+    }
+
+    private void PerformJump()
+    {
+        _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _currentJumpTimer = 0.0f;
     }
 
 
@@ -69,6 +90,5 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         _inputAction.Player.Jump.performed -= Jump_performed;
-
     }
 }
