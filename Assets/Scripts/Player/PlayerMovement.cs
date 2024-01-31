@@ -7,7 +7,8 @@ using Rayqdr.CatInputs;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _horizontalSpeed = 40.0f;
-    [SerializeField] private float _maxHorizontalSpeed = 20.0f;
+    [SerializeField] private float _maxHorizontalSpeedSad = 20.0f;
+    [SerializeField] private float _maxHorizontalSpeedHappy = 30.0f;
     [SerializeField] private float _jumpForce = 20.0f;
 
 
@@ -27,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimer = 1.0f;
     private float _currentJumpTimer = 0.0f;
 
+    private float _currentMaxHorizontalSpeed;
+
     private bool _isGrounded= false;
 
 
@@ -45,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         _inputAction.Player.Jump.performed += Jump_performed;
 
         _inputAction.Enable();
+
+        _currentMaxHorizontalSpeed = _maxHorizontalSpeedSad;
     }
 
     private void Jump_performed(InputAction.CallbackContext obj)
@@ -70,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _rb3D.AddForce(Vector2.right * _horizontalSpeed, ForceMode.Acceleration);
-        var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _maxHorizontalSpeed);
+        var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _currentMaxHorizontalSpeed);
         var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
         _rb3D.velocity = newClampedVelocity;
 
@@ -86,6 +91,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void ChangeMaxSpeed(bool transformed)
+    {
+        _currentMaxHorizontalSpeed = transformed ? _maxHorizontalSpeedHappy : _maxHorizontalSpeedSad;
+    }
 
     private bool IsGrounded()
     {

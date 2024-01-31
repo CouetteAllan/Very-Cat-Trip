@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     [SerializeField] private int _maxHealth = 3;
     [SerializeField] private ParticleSystem _glitterLoss;
+    [SerializeField] private ParticleSystem _starsEmitter;
+    [SerializeField] private Transform _catBody;
 
     public int MaxHealth { get { return _maxHealth; } }
 
@@ -29,8 +31,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private Rigidbody _rb;
     private Animator _animator;
+    private PlayerMovement _movement;
 
     private bool _isTransformed;
+    public bool IsTransformed { get { return _isTransformed; } }
     private int _health = 3;
     private bool _isInvincible = false;
     
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _movement = GetComponent<PlayerMovement>();
 
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
         GlitterManager.OnGlitterTresholdUpdate += GlitterManager_OnGlitterTresholdUpdate;
@@ -59,6 +64,16 @@ public class PlayerController : MonoBehaviour, IDamageable
             //Change anims;
             _animator.SetTrigger("Transform");
             SoundManager.Instance.Play("LevelUp");
+            _starsEmitter.Play();
+            _catBody.localPosition = new Vector3(0, 0.25f, 0);
+            _movement.ChangeMaxSpeed(true);
+        }
+        else if(_isTransformed && !tresholdAchieved)
+        {
+            _isTransformed = false;
+            _starsEmitter.Stop();
+            _catBody.localPosition = new Vector3(0, -0.25f, 0);
+            _movement.ChangeMaxSpeed(false);
         }
     }
 

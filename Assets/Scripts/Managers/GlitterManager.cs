@@ -9,6 +9,10 @@ public class GlitterManager : Singleton<GlitterManager>
     public static event Action<bool> OnGlitterTresholdUpdate;
 
     [SerializeField] private int _maxGlitter = 50;
+    [SerializeField] private SpriteRenderer _dayBackground;
+    [SerializeField] private SpriteRenderer _nightBackground;
+
+
     public int MaxGlitter
     {
         get => _maxGlitter;
@@ -24,10 +28,18 @@ public class GlitterManager : Singleton<GlitterManager>
     private void PropScript_OnGatherProp(PropScript prop)
     {
         GatherGlitter();
-        bool midGlitter = Glitter >= (float)MaxGlitter / 2.0f;
-        if(midGlitter)
+        bool threshold = Glitter >= (float)MaxGlitter / 2.0f;
+        if(threshold)
         {
-            OnGlitterTresholdUpdate?.Invoke(midGlitter);
+            OnGlitterTresholdUpdate?.Invoke(threshold);
+            StartCoroutine(ChangeBackground(true));
+        }
+
+        bool negativeThreshold = Glitter <= (float)MaxGlitter * 0.35f && GameManager.Instance.PlayerController.IsTransformed;
+        if(negativeThreshold)
+        {
+            OnGlitterTresholdUpdate?.Invoke(false);
+            StartCoroutine(ChangeBackground(false));
         }
         
     }
@@ -44,5 +56,24 @@ public class GlitterManager : Singleton<GlitterManager>
     private void OnDisable()
     {
         PropScript.OnGatherProp -= PropScript_OnGatherProp;
+    }
+
+    private IEnumerator ChangeBackground(bool isDay)
+    {
+
+        float alphaFactor = isDay ? 1.0f : -1.0f;
+        float startTime = Time.time;
+        float endTime = 2.0f;
+        while(startTime + endTime > Time.time)
+        {
+
+            Color newCol = _dayBackground.color;
+            newCol.a += (0.3f * alphaFactor) * Time.deltaTime;  
+            _dayBackground.color = newCol;
+            yield return null;
+        }
+
+        yield break;
+
     }
 }
