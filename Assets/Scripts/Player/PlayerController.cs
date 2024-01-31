@@ -54,6 +54,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.OnGameStateChanged += GameManager_OnGameStateChanged;
         GlitterManager.OnGlitterTresholdUpdate += GlitterManager_OnGlitterTresholdUpdate;
         GameManager.Instance.SetPlayer(this);
+
+        _inputs.Player.Pause.performed += Pause_performed;
+    }
+
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if(GameManager.Instance.CurrentState != GameState.Pause)
+            GameManager.Instance.ChangeGameState(GameState.Pause);
     }
 
     private void GlitterManager_OnGlitterTresholdUpdate(bool tresholdAchieved)
@@ -104,6 +112,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
         GlitterManager.OnGlitterTresholdUpdate -= GlitterManager_OnGlitterTresholdUpdate;
+        _inputs.Player.Pause.performed -= Pause_performed;
+
     }
 
     public void TryTakeDamage(int damage, IDamageSource source)
@@ -127,6 +137,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         //Play invincible state
         StartCoroutine(InvincibleCoroutine());
+        _animator.SetTrigger("Hurt");
+    }
+
+    private void Update()
+    {
+        _animator.SetBool("IsTransformed", _isTransformed);
     }
 
     private IEnumerator InvincibleCoroutine()

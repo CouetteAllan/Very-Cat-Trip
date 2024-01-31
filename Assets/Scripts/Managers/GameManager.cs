@@ -52,9 +52,12 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             case GameState.BeforeStartGame:
+                Time.timeScale = 1.0f;
+                Time.fixedDeltaTime = Time.timeScale * 0.01f;
                 break;
             case GameState.StartGame:
                 Time.timeScale = 1.0f;
+                Time.fixedDeltaTime = Time.timeScale * 0.01f;
                 SoundManager.Instance.PlayMusic("SadMusic");
                 break;
             case GameState.InGame:
@@ -69,6 +72,16 @@ public class GameManager : Singleton<GameManager>
                 Cursor.visible = true;
                 SoundManager.Instance.PlayMusic("GameOver");
                 break;
+
+            case GameState.Pause:
+                Time.timeScale = 0.0f;
+                Cursor.visible = true;
+                break;
+
+            case GameState.Win:
+                Time.timeScale = 0.1f;
+                Time.fixedDeltaTime = Time.timeScale * 0.01f;
+                break;
         }
         OnGameStateChanged?.Invoke(newState);
         Debug.Log("Game State: " + CurrentState.ToString());
@@ -79,6 +92,11 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitUntil(() => LevelGenerator.instance.ready == true);
         ChangeGameState(GameState.StartGame);
+    }
+
+    public void SetResume()
+    {
+        ChangeGameState(GameState.InGame);
     }
 
     public void SetPlayer(PlayerController player) => _player = player;

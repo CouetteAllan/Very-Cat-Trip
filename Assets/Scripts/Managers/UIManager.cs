@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -52,8 +53,6 @@ public class UIManager : Singleton<UIManager>
     public void SetPause(bool active)
     {
         _pauseMenu.gameObject.SetActive(active);
-        if(active)
-            _pauseMenu.GetComponent<Animator>().SetTrigger("Play");
     }
 
     public void SetGameOver(bool active)
@@ -74,5 +73,15 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
 
+    }
+
+    public void Reset()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(2);
     }
 }
