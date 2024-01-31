@@ -14,6 +14,7 @@ public class GlitterManager : Singleton<GlitterManager>
     [SerializeField] private SpriteRenderer _nightBackground;
 
     private bool _maxGlitterReached = false;
+    private bool _changedOnce = false;
 
     public int MaxGlitter
     {
@@ -34,7 +35,13 @@ public class GlitterManager : Singleton<GlitterManager>
         if(threshold)
         {
             OnGlitterTresholdUpdate?.Invoke(threshold);
-            StartCoroutine(ChangeBackground(true));
+            if (!_changedOnce)
+            {
+                _changedOnce = true;
+                StartCoroutine(ChangeBackground(true));
+                StartCoroutine(ChangeMusic(true));
+            }
+            
         }
 
         bool negativeThreshold = Glitter <= (float)MaxGlitter * 0.35f && GameManager.Instance.PlayerController.IsTransformed;
@@ -84,5 +91,14 @@ public class GlitterManager : Singleton<GlitterManager>
 
         yield break;
 
+    }
+
+    private IEnumerator ChangeMusic(bool isDay)
+    {
+        SoundManager.Instance.StopMusic("SadMusic");
+        yield return new WaitForSeconds(1.0f);
+        SoundManager.Instance.PlayMusic("HappyMusic");
+        Debug.Log("changededed");
+        
     }
 }

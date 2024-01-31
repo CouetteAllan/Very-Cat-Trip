@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.StartGame:
                 Time.timeScale = 1.0f;
-
+                SoundManager.Instance.PlayMusic("SadMusic");
                 break;
             case GameState.InGame:
                 Time.timeScale = 1.0f;
@@ -67,6 +67,7 @@ public class GameManager : Singleton<GameManager>
                 Time.fixedDeltaTime = Time.timeScale * 0.01f;
                 //faire des trucs de game over
                 Cursor.visible = true;
+                SoundManager.Instance.PlayMusic("GameOver");
                 break;
         }
         OnGameStateChanged?.Invoke(newState);

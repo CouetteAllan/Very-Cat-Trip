@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if(other.gameObject.tag == "End")
         {
-
+            GameManager.Instance.ChangeGameState(GameState.Win);
         }
     }
 }

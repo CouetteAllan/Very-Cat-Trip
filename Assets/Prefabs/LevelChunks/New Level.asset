@@ -86,7 +86,7 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 1
+        randomPickChance: 0.6666666
         _prefab: {fileID: 8902685967838713367, guid: f5bc70aa1c2965e4aa718ce42df964a3, type: 3}
         _segmentPool: []
         _pool: 0
@@ -98,8 +98,8 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       customPathGenerator: {fileID: 0}
-      spawnCount: 3
-      type: 3
+      spawnCount: 5
+      type: 1
       randomizer: {fileID: 11400000, guid: fb600be43607d7e47822c78754644d57, type: 2}
       customShuffle: {fileID: 0}
       preventRepeat: 0
@@ -115,13 +115,13 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 0.8
+        randomPickChance: 0.53333336
         _prefab: {fileID: 8902685967838713367, guid: f5bc70aa1c2965e4aa718ce42df964a3, type: 3}
         _segmentPool: []
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 0.7222222
+        randomPickChance: 0.5333333
         _prefab: {fileID: 8902685967838713367, guid: 40a816f3ca8399f429dc5855ebb7ba29, type: 3}
         _segmentPool: []
         _pool: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 1
+        randomPickChance: 0.6666666
         _prefab: {fileID: 8902685967838713367, guid: f5bc70aa1c2965e4aa718ce42df964a3, type: 3}
         _segmentPool: []
         _pool: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       customPathGenerator: {fileID: 0}
-      spawnCount: 3
-      type: 3
+      spawnCount: 5
+      type: 1
       randomizer: {fileID: 11400000, guid: fb600be43607d7e47822c78754644d57, type: 2}
       customShuffle: {fileID: 0}
       preventRepeat: 0
@@ -241,13 +241,13 @@ MonoBehaviour:
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 0.8
+        randomPickChance: 0.53333336
         _prefab: {fileID: 8902685967838713367, guid: f5bc70aa1c2965e4aa718ce42df964a3, type: 3}
         _segmentPool: []
         _pool: 0
         _poolParent: {fileID: 0}
       - nested: 0
-        randomPickChance: 0.7222222
+        randomPickChance: 0.5333333
         _prefab: {fileID: 8902685967838713367, guid: 40a816f3ca8399f429dc5855ebb7ba29, type: 3}
         _segmentPool: []
         _pool: 0
