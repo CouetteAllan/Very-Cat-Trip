@@ -478,7 +478,7 @@ MonoBehaviour:
     extrudedCollisionMesh: {fileID: 0}
     _extrusionSettings:
       meshColliderHandling: 0
-      boundsInclusion: -1
+      boundsInclusion: 4
       indexing: 0
       applyRotation: 1
       keepUpright: 1
@@ -496,11 +496,11 @@ MonoBehaviour:
     colliders: []
     _isRoot: 0
   bounds:
-    center: {x: -1.7489498, y: 6.04563, z: 0}
-    extents: {x: 9.66105, y: 6.7701297, z: 0.78}
+    center: {x: 0.7121, y: 6.04563, z: 0}
+    extents: {x: 7.2000003, y: 6.7701297, z: 0.78}
     max: {x: 7.9121003, y: 12.81576, z: 0.78}
-    min: {x: -11.41, y: -0.7245, z: -0.78}
-    size: {x: 19.3221, y: 13.540259, z: 1.56}
+    min: {x: -6.4879003, y: -0.7245, z: -0.78}
+    size: {x: 14.400001, y: 13.540259, z: 1.56}
   builders: []
   unpacked: 0
   alwaysDraw: 0

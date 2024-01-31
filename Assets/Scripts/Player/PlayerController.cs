@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (_isInvincible)
             return;
         //Blowback in the air
-        _rb.AddForce(((this.transform.position - source.Transform.position).normalized + Vector3.up) * 80.0f,ForceMode.Impulse);
+        _rb.AddForce(((this.transform.position - source.Transform.position).normalized + Vector3.up) * 30.0f,ForceMode.Impulse);
         //Lose some glitter and health
         _health--;
         OnChangeHealth?.Invoke(_health,true);

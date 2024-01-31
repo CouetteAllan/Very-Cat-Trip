@@ -14,7 +14,8 @@ public enum GameState
     StartGame,
     InGame,
     GameOver,
-    Pause
+    Pause,
+    Win
 }
 
 public class GameManager : Singleton<GameManager>

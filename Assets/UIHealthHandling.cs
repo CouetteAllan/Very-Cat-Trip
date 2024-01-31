@@ -7,6 +7,7 @@ public class UIHealthHandling : MonoBehaviour
 {
     [SerializeField] private Image _healthPrefab;
     private List<Image> _images = new List<Image>();
+    private int _maxHealth;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class UIHealthHandling : MonoBehaviour
     {
         if(newState == GameState.StartGame)
         {
+            _maxHealth = GameManager.Instance.PlayerController.MaxHealth;
             Initialize(GameManager.Instance.PlayerController.MaxHealth);
         }
     }
@@ -48,8 +50,11 @@ public class UIHealthHandling : MonoBehaviour
         }
     }
 
+
     private void OnDestroy()
     {
         GameManager.OnGameStateChanged -= GameManager_OnGameStateChanged;
+        PlayerController.OnChangeHealth -= PlayerController_OnChangeHealth;
+
     }
 }

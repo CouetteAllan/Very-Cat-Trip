@@ -7,11 +7,13 @@ using UnityEngine.Rendering;
 public class GlitterManager : Singleton<GlitterManager>
 {
     public static event Action<bool> OnGlitterTresholdUpdate;
+    public static event Action OnMaxGlitterReached;
 
     [SerializeField] private int _maxGlitter = 50;
     [SerializeField] private SpriteRenderer _dayBackground;
     [SerializeField] private SpriteRenderer _nightBackground;
 
+    private bool _maxGlitterReached = false;
 
     public int MaxGlitter
     {
@@ -40,6 +42,13 @@ public class GlitterManager : Singleton<GlitterManager>
         {
             OnGlitterTresholdUpdate?.Invoke(false);
             StartCoroutine(ChangeBackground(false));
+        }
+
+        bool reachMaxGlitter = Glitter >= MaxGlitter;
+        if(reachMaxGlitter && !_maxGlitterReached)
+        {
+            _maxGlitterReached = true;
+            OnMaxGlitterReached?.Invoke();
         }
         
     }
