@@ -91,6 +91,11 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void ChangeJumpForce()
+    {
+        _jumpForce = 8.0f;
+    }
+
     public void ChangeMaxSpeed(bool transformed)
     {
         _currentMaxHorizontalSpeed = transformed ? _maxHorizontalSpeedHappy : _maxHorizontalSpeedSad;

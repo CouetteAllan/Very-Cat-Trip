@@ -138,4 +138,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         _isInvincible = false;
         _animator.SetLayerWeight(1, 0);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "End")
+        {
+
+        }
+    }
 }
