@@ -28,35 +28,10 @@ public class GlitterManager : Singleton<GlitterManager>
         PropScript.OnGatherProp += PropScript_OnGatherProp;
     }
 
-    private void PropScript_OnGatherProp(PropScript prop)
+    private void PropScript_OnGatherProp(PropType prop)
     {
-        GatherGlitter();
-        bool threshold = Glitter >= (float)MaxGlitter / 2.0f;
-        if(threshold)
-        {
-            OnGlitterTresholdUpdate?.Invoke(threshold);
-            if (!_changedOnce)
-            {
-                _changedOnce = true;
-                StartCoroutine(ChangeBackground(true));
-                StartCoroutine(ChangeMusic(true));
-            }
-            
-        }
-
-        bool negativeThreshold = Glitter <= (float)MaxGlitter * 0.35f && GameManager.Instance.PlayerController.IsTransformed;
-        if(negativeThreshold)
-        {
-            OnGlitterTresholdUpdate?.Invoke(false);
-            StartCoroutine(ChangeBackground(false));
-        }
-
-        bool reachMaxGlitter = Glitter >= MaxGlitter;
-        if(reachMaxGlitter && !_maxGlitterReached)
-        {
-            _maxGlitterReached = true;
-            OnMaxGlitterReached?.Invoke();
-        }
+        if(prop == PropType.Glitter)
+            GatherGlitter();
         
     }
 
@@ -66,6 +41,33 @@ public class GlitterManager : Singleton<GlitterManager>
         Glitter++;
         UIManager.Instance.UpdateGlitter(Glitter, MaxGlitter);
         SoundManager.Instance.Play("Glitter");
+        bool threshold = Glitter >= (float)MaxGlitter / 2.0f;
+        if (threshold)
+        {
+            OnGlitterTresholdUpdate?.Invoke(threshold);
+            if (!_changedOnce)
+            {
+                _changedOnce = true;
+                StartCoroutine(ChangeBackground(true));
+                StartCoroutine(ChangeMusic(true));
+            }
+
+        }
+
+        bool negativeThreshold = Glitter <= (float)MaxGlitter * 0.35f && GameManager.Instance.PlayerController.IsTransformed;
+        if (negativeThreshold)
+        {
+            OnGlitterTresholdUpdate?.Invoke(false);
+            StartCoroutine(ChangeBackground(false));
+        }
+
+        bool reachMaxGlitter = Glitter >= MaxGlitter;
+        if (reachMaxGlitter && !_maxGlitterReached)
+        {
+            _maxGlitterReached = true;
+            OnMaxGlitterReached?.Invoke();
+        }
+
     }
 
 

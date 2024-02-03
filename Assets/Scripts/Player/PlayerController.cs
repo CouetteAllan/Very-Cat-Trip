@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     public static event Action<int,bool> OnChangeHealth;
 
-    [SerializeField] private int _maxHealth = 3;
+    [SerializeField] private int _maxHealth = 4;
     [SerializeField] private ParticleSystem _glitterLoss;
     [SerializeField] private ParticleSystem _starsEmitter;
     [SerializeField] private Transform _catBody;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private bool _isTransformed;
     public bool IsTransformed { get { return _isTransformed; } }
-    private int _health = 3;
+    private int _health = 4;
     private bool _isInvincible = false;
     
 
@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         GameManager.Instance.SetPlayer(this);
 
         _inputs.Player.Pause.performed += Pause_performed;
+
+        _health = _maxHealth;
     }
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -123,8 +125,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         //Blowback in the air
         _rb.AddForce(((this.transform.position - source.Transform.position).normalized + Vector3.up) * 30.0f,ForceMode.Impulse);
         //Lose some glitter and health
-        _health--;
-        OnChangeHealth?.Invoke(_health,true);
+        ChangeHealth(-1);
         SoundManager.Instance.Play("Hurt");
         SoundManager.Instance.Play("Paf");
         _glitterLoss.Play();
@@ -143,6 +144,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Update()
     {
         _animator.SetBool("IsTransformed", _isTransformed);
+    }
+
+    public void ChangeHealth(int health)
+    {
+        _health = Mathf.Clamp(_health + health, 0,_maxHealth) ;
+        OnChangeHealth?.Invoke(_health, health < 0);
+
     }
 
     private IEnumerator InvincibleCoroutine()
