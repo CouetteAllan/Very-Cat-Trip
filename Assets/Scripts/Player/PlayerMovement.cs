@@ -46,10 +46,18 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputAction = _playerController.Inputs;
         _inputAction.Player.Jump.performed += Jump_performed;
+        _inputAction.Player.Jump.canceled += Jump_canceled;
 
         _inputAction.Enable();
 
         _currentMaxHorizontalSpeed = _maxHorizontalSpeedSad;
+    }
+
+    private void Jump_canceled(InputAction.CallbackContext obj)
+    {
+        var newVelY = _rb3D.velocity;
+        newVelY.y /= 4.0f;
+        _rb3D.velocity = newVelY;
     }
 
     private void Jump_performed(InputAction.CallbackContext obj)

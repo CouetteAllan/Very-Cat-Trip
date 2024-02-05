@@ -6,7 +6,7 @@ using System;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
-    public static event Action<int,bool> OnChangeHealth;
+    public static event Action<int> OnChangeHealth;
 
     [SerializeField] private int _maxHealth = 4;
     [SerializeField] private ParticleSystem _glitterLoss;
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void ChangeHealth(int health)
     {
         _health = Mathf.Clamp(_health + health, 0,_maxHealth) ;
-        OnChangeHealth?.Invoke(_health, health < 0);
+        OnChangeHealth?.Invoke(_health);
 
     }
 
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _isInvincible = true;
         //play fade anim
         _animator.SetLayerWeight(1, 1);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(4.0f);
         _isInvincible = false;
         _animator.SetLayerWeight(1, 0);
     }

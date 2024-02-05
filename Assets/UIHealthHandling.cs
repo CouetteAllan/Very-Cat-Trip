@@ -15,12 +15,10 @@ public class UIHealthHandling : MonoBehaviour
         PlayerController.OnChangeHealth += PlayerController_OnChangeHealth;
     }
 
-    private void PlayerController_OnChangeHealth(int currentHealth, bool didLostHealth)
+    private void PlayerController_OnChangeHealth(int currentHealth)
     {
-        if(didLostHealth)
-        {
-            Initialize(currentHealth);
-        }
+        Initialize(currentHealth);
+        
     }
 
     private void GameManager_OnGameStateChanged(GameState newState)

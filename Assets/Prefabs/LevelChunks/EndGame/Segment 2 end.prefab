@@ -698,7 +698,7 @@ MonoBehaviour:
   type: 1
   customEntrance: {fileID: 2213763398210451698}
   customExit: {fileID: 9172486655981574148}
-  customKeepUpright: 0
+  customKeepUpright: 1
   _customMainPath: -1
   axis: 0
   customPaths: []

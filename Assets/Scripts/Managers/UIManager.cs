@@ -20,6 +20,12 @@ public class UIManager : Singleton<UIManager>
     {
         switch (state)
         {
+            case GameState.BeforeStartGame:
+                SetPause(false);
+                SetGameOver(false);
+                SetWin(false);
+                break;
+
             case GameState.InGame:
                 SetPause(false);
                 SetGameOver(false);
