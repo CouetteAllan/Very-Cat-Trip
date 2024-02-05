@@ -31,8 +31,9 @@ public class PlayerMovement : MonoBehaviour
     private float _currentMaxHorizontalSpeed;
 
     private bool _isGrounded= false;
+    private bool _isBoosting = false;
 
-
+    private Coroutine _storedCoroutine = null;
     private void Awake()
     {
         _rb3D = GetComponent<Rigidbody>();
@@ -55,8 +56,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump_canceled(InputAction.CallbackContext obj)
     {
+        if (_isGrounded)
+            return;
         var newVelY = _rb3D.velocity;
-        newVelY.y /= 4.0f;
+        newVelY.y /= 2.0f;
         _rb3D.velocity = newVelY;
     }
 
@@ -82,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isBoosting)
+            return;
         _rb3D.AddForce(Vector2.right * _horizontalSpeed, ForceMode.Acceleration);
         var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _currentMaxHorizontalSpeed);
         var newClampedVelocity = new Vector2(clampedVelocityX, _rb3D.velocity.y);
@@ -91,6 +96,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void PerformJump()
     {
+        if (_isBoosting)
+            return;
         _rb3D.AddForce(Vector2.up * _jumpForce, ForceMode.Impulse);
 
         _anim.SetTrigger("Jump");
@@ -109,12 +116,39 @@ public class PlayerMovement : MonoBehaviour
         _currentMaxHorizontalSpeed = transformed ? _maxHorizontalSpeedHappy : _maxHorizontalSpeedSad;
     }
 
-    private bool IsGrounded()
+    public void SpeedBoost(float bonusSpeed,Vector3 dir)
     {
-        var cast = Physics.SphereCast(_rb3D.position, _radius, Vector3.down,out RaycastHit hitInfo,_castDistance);
-        Debug.Log(hitInfo.collider);
+        if (_storedCoroutine != null)
+            StopCoroutine(_storedCoroutine);
+        _storedCoroutine = StartCoroutine(StraightLineCoroutine(bonusSpeed, dir));
+    }
 
-        return cast;
+    private IEnumerator StraightLineCoroutine(float speed, Vector3 dir)
+    {
+        //go in a straight line at a high speed
+        _isBoosting = true;
+        float startTime = Time.time;
+        float endTime = 0.6f;
+
+        _currentMaxHorizontalSpeed *= speed;
+        _rb3D.useGravity = false;
+        _rb3D.velocity = Vector3.zero;
+        _rb3D.velocity = dir.normalized;
+        while(startTime + endTime > Time.time)
+        {
+            _rb3D.AddForce(dir.normalized * _horizontalSpeed * 2.0f, ForceMode.Acceleration);
+            var clampedVelocityX = Mathf.Clamp(_rb3D.velocity.x, -25.0f, _currentMaxHorizontalSpeed);
+            var clampedVelocityY = Mathf.Clamp(_rb3D.velocity.y, -25.0f, _currentMaxHorizontalSpeed);
+            var newClampedVelocity = new Vector2(clampedVelocityX, clampedVelocityY);
+            _rb3D.velocity = newClampedVelocity;
+            yield return new WaitForFixedUpdate();
+        }
+
+        _isBoosting = false;
+        _currentMaxHorizontalSpeed = _playerController.IsTransformed ? _maxHorizontalSpeedHappy : _maxHorizontalSpeedSad;
+        _rb3D.useGravity = true;
+        _rb3D.velocity /= 3.0f;
+
     }
 
     private void OnDrawGizmos()
