@@ -50,6 +50,7 @@ public class GlitterManager : Singleton<GlitterManager>
                 _changedOnce = true;
                 StartCoroutine(ChangeBackground(true));
                 StartCoroutine(ChangeMusic(true));
+                FXManager.Instance.ChangeProfile(true);
             }
 
         }

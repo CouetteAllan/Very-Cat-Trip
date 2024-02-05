@@ -270,7 +270,7 @@ MonoBehaviour:
       boundsInclusion: -1
       indexing: 0
       applyRotation: 1
-      keepUpright: 0
+      keepUpright: 1
       upVector: {x: 0, y: 1, z: 0}
       applyScale: 1
       bendMesh: 0

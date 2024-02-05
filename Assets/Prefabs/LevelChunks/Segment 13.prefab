@@ -274,7 +274,7 @@ MonoBehaviour:
       boundsInclusion: -1
       indexing: 0
       applyRotation: 1
-      keepUpright: 0
+      keepUpright: 1
       upVector: {x: 0, y: 1, z: 0}
       applyScale: 1
       bendMesh: 0
@@ -350,6 +350,37 @@ MonoBehaviour:
     meshFilter: {fileID: 0}
     meshCollider: {fileID: 0}
     spriteRenderer: {fileID: 9016709084012342334}
+    colliders: []
+    _isRoot: 0
+  - transform: {fileID: 4734694734147264228}
+    localRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+    extrudedMesh: {fileID: 0}
+    extrusionSpriteVertices: []
+    extrusionSpriteUVs: []
+    extrusionSpriteRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    extrudedCollisionMesh: {fileID: 0}
+    _extrusionSettings:
+      meshColliderHandling: 0
+      boundsInclusion: -1
+      indexing: 0
+      applyRotation: 1
+      keepUpright: 0
+      upVector: {x: 0, y: 1, z: 0}
+      applyScale: 0
+      bendMesh: 0
+      bendSprite: 0
+      bendPolygonCollider: 0
+      applyMeshColors: 0
+    _settingsComponent: {fileID: 0}
+    overrideSettingsComponent: 0
+    meshFilter: {fileID: 0}
+    meshCollider: {fileID: 0}
+    spriteRenderer: {fileID: 0}
     colliders: []
     _isRoot: 0
   - transform: {fileID: 4326986174039035800}
@@ -743,7 +774,7 @@ MonoBehaviour:
   drawEntranceAndExit: 1
   drawBounds: 1
   drawCustomPaths: 1
-  editorChildCount: 16
+  editorChildCount: 17
 --- !u!1001 &2264846057432597975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1003,7 +1034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831730408754489736, guid: d577752c33acb3d47b535ce7c0c05d0e, type: 3}
       propertyPath: _speedBoost
-      value: 1.8
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8087270016347383778, guid: d577752c33acb3d47b535ce7c0c05d0e, type: 3}
       propertyPath: m_RootOrder
@@ -1064,6 +1095,11 @@ Transform:
 --- !u!4 &2925854016844413580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5624870659511409335, guid: d577752c33acb3d47b535ce7c0c05d0e, type: 3}
+  m_PrefabInstance: {fileID: 7391874466719522875}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4734694734147264228 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2819312120038588127, guid: d577752c33acb3d47b535ce7c0c05d0e, type: 3}
   m_PrefabInstance: {fileID: 7391874466719522875}
   m_PrefabAsset: {fileID: 0}
 --- !u!212 &9016709084012342334 stripped
